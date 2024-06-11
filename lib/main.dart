@@ -1,5 +1,6 @@
 import 'package:bookly_app/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'features/splash/presentation/views/splash_view.dart';
@@ -13,9 +14,15 @@ class BooklyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: KprimaryColor),
-      home: const SplashView(),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: GetMaterialApp(
+        theme:
+            ThemeData.dark().copyWith(scaffoldBackgroundColor: KprimaryColor),
+        home: const SplashView(),
+      ),
     );
   }
 }
