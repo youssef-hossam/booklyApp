@@ -11,14 +11,14 @@ class SearchViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          CustomSerachTextField(),
+          const CustomSerachTextField(),
           SizedBox(
             height: 16.h,
           ),
-          Align(
+          const Align(
             alignment: Alignment.centerLeft,
             child: Text(
               "Search Results",
@@ -28,7 +28,7 @@ class SearchViewBody extends StatelessWidget {
           SizedBox(
             height: 16.h,
           ),
-          SearchResultListView()
+          const SearchResultListView()
         ],
       ),
     );
@@ -42,6 +42,6 @@ class SearchResultListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: BestSellerListView());
+    return const Expanded(child: BestSellerListView());
   }
 }
