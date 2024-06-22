@@ -10,7 +10,7 @@ class FeaturedListViewItem extends StatelessWidget {
     return GridView.builder(
       itemCount: 4,
       scrollDirection: Axis.horizontal,
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           childAspectRatio: 1.4, maxCrossAxisExtent: 240),
       itemBuilder: (context, index) {
         return Container(

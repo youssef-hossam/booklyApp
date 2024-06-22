@@ -1,8 +1,8 @@
-import 'package:bookly_app/features/home/presentation/views/home_view.dart';
+import 'package:bookly_app/core/utils/app_rounter.dart';
 import 'package:bookly_app/features/splash/presentation/views/widgets/sliding_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
+import 'package:go_router/go_router.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -35,7 +35,13 @@ class _SplashViewBodyState extends State<SplashViewBody>
     Future.delayed(
       Duration(seconds: 3),
       () {
-        Get.to(() => HomeView(), transition: Transition.fadeIn);
+        // Get.to(() => HomeView(), transition: Transition.fadeIn);
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => HomeView(),
+        //     ));
+        GoRouter.of(context).push(AppRouter.kHomeView);
       },
     );
   }
@@ -61,7 +67,9 @@ class _SplashViewBodyState extends State<SplashViewBody>
         const SizedBox(
           height: 4,
         ),
-        SlidingText(slidinganimation: slidinganimation),
+        SlidingText(
+          slidinganimation: slidinganimation,
+        ),
       ],
     );
   }
