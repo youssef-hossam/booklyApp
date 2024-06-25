@@ -5,10 +5,10 @@ import 'package:bookly_app/features/home/data/repos/home_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
-class HomdeRepoImplementation implements HomeRepo {
+class HomeRepoImplementation implements HomeRepo {
   final ApiServices apiServices;
 
-  HomdeRepoImplementation({required this.apiServices});
+  HomeRepoImplementation({required this.apiServices});
   @override
   Future<Either<Failure, List<BookModel>>> fetechNewestBooks() async {
     try {
