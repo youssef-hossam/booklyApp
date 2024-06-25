@@ -10,7 +10,7 @@ class HomdeRepoImplementation implements HomeRepo {
 
   HomdeRepoImplementation({required this.apiServices});
   @override
-  Future<Either<Faliure, List<BookModel>>> fetechBestSellerBooks() async {
+  Future<Either<Failure, List<BookModel>>> fetechNewestBooks() async {
     try {
       var data = await apiServices.get(
           endpoint: 'volumes?q=programming&orderBy=newest');
@@ -31,7 +31,7 @@ class HomdeRepoImplementation implements HomeRepo {
   }
 
   @override
-  Future<Either<Faliure, List<BookModel>>> fetechFeaturedBooks() async {
+  Future<Either<Failure, List<BookModel>>> fetechFeaturedBooks() async {
     try {
       var data = await apiServices.get(endpoint: 'volumes?q=programming');
       List<BookModel> books = [];
