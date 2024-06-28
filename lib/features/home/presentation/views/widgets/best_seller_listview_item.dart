@@ -1,19 +1,21 @@
 import 'package:bookly_app/core/utils/app_rounter.dart';
 import 'package:bookly_app/core/utils/styles.dart';
+import 'package:bookly_app/features/home/data/models/book_model/book.dart';
 import 'package:bookly_app/features/home/presentation/views/widgets/book_rating.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:go_router/go_router.dart';
 
 class BestSellerListViewItem extends StatelessWidget {
-  const BestSellerListViewItem({super.key});
-
+  const BestSellerListViewItem({super.key, required this.books});
+  final BookModel books;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).push(AppRouter.kBookDetailesView);
+        GoRouter.of(context).push(AppRouter.kBookDetailesView, extra: books);
       },
       child: Padding(
         padding: EdgeInsets.only(bottom: 10.h),
@@ -22,10 +24,13 @@ class BestSellerListViewItem extends StatelessWidget {
             Container(
               width: 120.w,
               height: 150.h,
-              alignment: Alignment.center,
-              child: Image.asset(
-                "assets/images/test_image.png",
-              ),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: CachedNetworkImageProvider(
+                        books.volumeInfo!.imageLinks!.thumbnail!,
+                      ))),
             ),
             SizedBox(
               width: 20.w,
@@ -35,15 +40,17 @@ class BestSellerListViewItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Harry Potter and the GobletofFire",
+                  Text(
+                    "${books.volumeInfo!.title}",
                     style: Styles.textStyle20,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(
                     height: 2.h,
                   ),
-                  const Text(
-                    "J.K. Ro`wling",
+                  Text(
+                    "${books.volumeInfo!.authors!.first}",
                     style: Styles.textStyle14,
                   ),
                   SizedBox(
@@ -52,11 +59,14 @@ class BestSellerListViewItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        '19.99 €',
+                      Text(
+                        '',
                         style: Styles.textStyle20,
                       ),
-                      BookRating()
+                      BookRating(
+                        ratingCount: books.volumeInfo!.ratingsCount ?? 0,
+                        rating: books.volumeInfo!.averageRating ?? 0,
+                      )
                     ],
                   ),
                 ],

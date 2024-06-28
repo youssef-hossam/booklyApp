@@ -1,4 +1,9 @@
+import 'package:bookly_app/core/utils/custom_progress_indicator.dart';
+import 'package:bookly_app/features/home/presentation/manger/simillar_books_cubit/simillar_books_cubit.dart';
+import 'package:bookly_app/features/home/presentation/views/widgets/errMessage_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SimiallarListView extends StatelessWidget {
@@ -6,40 +11,35 @@ class SimiallarListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: 10,
-      itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.only(right: 10.w),
-        child: AspectRatio(
-          aspectRatio: 3.3 / 4,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
-              image: const DecorationImage(
-                fit: BoxFit.contain,
-                image: AssetImage(
-                  "assets/images/test_image.png",
+    return BlocBuilder<SimillarBooksCubit, SimillarBooksState>(
+      builder: (context, state) {
+        if (state is SimillarBooksSuccess) {
+          return Expanded(
+              child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 10,
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.only(right: 10.w),
+              child: AspectRatio(
+                aspectRatio: 2.2 / 4,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: CachedNetworkImageProvider(state
+                            .books[index].volumeInfo!.imageLinks!.thumbnail!)),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      ),
-    ));
-    // return GridView.builder(
-    //   itemCount: 4,
-    //   scrollDirection: Axis.horizontal,
-    //   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-    //       childAspectRatio: 1.9, maxCrossAxisExtent: 190),
-    //   itemBuilder: (context, index) {
-    //     return Container(
-    //       decoration: BoxDecoration(
-    //           image: DecorationImage(
-    //               image: AssetImage('assets/images/test_image.png'))),
-    //     );
-    //   },
-    // );
+          ));
+        } else if (state is SimillarBooksFailure) {
+          return ErrMessageWidget(errorMessage: state.errorMessage);
+        } else {
+          return const CustomProgressIndicator();
+        }
+      },
+    );
   }
 }
